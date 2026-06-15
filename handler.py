@@ -141,6 +141,7 @@ def handler(event):
             num_inference_steps=steps,
             num_images_per_prompt=num_images,
             generator=gen,
+            guidance_scale=0.0,
         )
         images = [_img_to_data_url(im) for im in result.images]
         return {
