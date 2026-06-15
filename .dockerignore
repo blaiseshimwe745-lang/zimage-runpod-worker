@@ -1,0 +1,6 @@
+test_local.py
+README.md
+.git
+.gitignore
+__pycache__
+*.pyc
