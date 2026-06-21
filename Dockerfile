@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir \
         git+https://github.com/huggingface/diffusers
 
 # ---- pre-download model into image (slow build, fast cold start) ----
-ARG MODEL_ID=Tongyi-MAI/Z-Image-Turbo
+ARG MODEL_ID=Tongyi-MAI/Z-Image
 ENV MODEL_ID=${MODEL_ID}
 RUN python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='${MODEL_ID}', allow_patterns=['*.json','*.txt','*.safetensors','*.bin','*.model','*.py'])"
 

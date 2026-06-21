@@ -52,7 +52,7 @@ except Exception as e:
     raise
 
 
-MODEL_ID = os.environ.get("MODEL_ID", "Tongyi-MAI/Z-Image-Turbo")
+MODEL_ID = os.environ.get("MODEL_ID", "Tongyi-MAI/Z-Image")
 pipe = None
 pipe_load_error = None
 
@@ -125,7 +125,7 @@ def handler(event):
         negative_prompt = inp.get("negative_prompt") or None
         width = int(inp.get("width", 1024))
         height = int(inp.get("height", 1024))
-        steps = int(inp.get("num_inference_steps", 8))
+        steps = int(inp.get("num_inference_steps", 50))  # full Z-Image needs ~50
         num_images = max(1, min(int(inp.get("num_images", 1)), 4))
         seed = inp.get("seed")
         if seed is None:
@@ -141,7 +141,7 @@ def handler(event):
             num_inference_steps=steps,
             num_images_per_prompt=num_images,
             generator=gen,
-            guidance_scale=0.0,
+            guidance_scale=float(inp.get("guidance_scale", 4.5)),  # full model uses real CFG
         )
         images = [_img_to_data_url(im) for im in result.images]
         return {
